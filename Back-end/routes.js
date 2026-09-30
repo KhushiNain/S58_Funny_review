@@ -7,6 +7,20 @@ const usersData = require('./config/loginData.json')
 const Joi = require('joi');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const checkFunny = require("./ai");
+
+const result = await checkFunny(req.body.review);
+
+if (result === "NOT_FUNNY") {
+    return res.status(400).send({
+        message: "Your review isn't funny enough 😭"
+    });
+}
+
+restaurant.reviews.push(req.body.review);
+await restaurant.save();
+
+res.send(restaurant);
 
 
 // signup Validate
